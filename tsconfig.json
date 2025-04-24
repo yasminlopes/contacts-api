@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "outDir": "dist",
+      "module": "commonjs",
+      "target": "es2019",
+      "esModuleInterop": true,
+      // "strictNullChecks": true,
+      "strictPropertyInitialization": false,
+      "strict": false,
+      "typeRoots": ["./src/@types", "./node_modules/@types"]
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": ["**/*.spec.ts", "**/*.test.ts"]
+  }
