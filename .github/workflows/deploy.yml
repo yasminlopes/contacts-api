@@ -22,7 +22,7 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh ${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ec2-user/contacts-api
             git pull origin main
             docker-compose down
