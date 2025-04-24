@@ -15,10 +15,9 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY --from=builder /app /app
+COPY --from=builder /app/node_modules /app/node_modules
 
 ENV NODE_ENV=production
-
-RUN npm install --omit=dev
 
 EXPOSE 3333
 

@@ -20,11 +20,14 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy via SSH
+      - name: Envia código para EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          rsync -avz --exclude node_modules --exclude dist --exclude .env -e "ssh -i ~/.ssh/id_rsa" ./ ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/contacts-api
+
+      - name: Roda docker-compose na EC2
+        run: |
+          ssh -i ~/.ssh/id_rsa ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ec2-user/contacts-api
-            git pull origin main
             docker-compose down
             docker-compose up --build -d
           EOF
