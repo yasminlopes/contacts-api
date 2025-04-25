@@ -114,4 +114,30 @@ export class ContactController {
       })
     }
   }
+
+  async update (req: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const { guid } = req.params as { guid: string }
+    const data = req.body as Partial<ContactInput>
+
+    try {
+      const updated = await this._contactService.update(guid, data)
+
+      if (!updated) {
+        return reply.code(404).send({
+          message: MESSAGES.CONTACT_NOT_FOUND,
+          statusCode: 404
+        })
+      }
+
+      return reply.code(200).send({
+        message: MESSAGES.CONTACT_UPDATED,
+        statusCode: 200
+      })
+    } catch {
+      return reply.code(500).send({
+        message: MESSAGES.CONTACT_UPDATE_ERROR,
+        statusCode: 500
+      })
+    }
+  }
 }

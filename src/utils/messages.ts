@@ -1,5 +1,6 @@
 export const MESSAGES = {
   CONTACT_CREATED: 'Contato criado com sucesso.',
+  CONTACT_UPDATED: 'Contato atualizado com sucesso.',
   CONTACT_EXISTS: 'CPF já cadastrado.',
   CONTACT_NOT_FOUND: 'Nenhum contato encontrado.',
   CONTACT_FETCH_ERROR: 'Erro ao buscar contatos.',

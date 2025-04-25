@@ -64,4 +64,16 @@ export class ContactService {
 
     return true
   }
+
+  async update (guid: string, data: Partial<ContactInput>): Promise<boolean> {
+    const existing = await this.db.contact.findUnique({ where: { guid } })
+    if (!existing) return false
+
+    await this.db.contact.update({
+      where: { guid },
+      data
+    })
+
+    return true
+  }
 }
