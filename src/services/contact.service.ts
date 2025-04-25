@@ -49,4 +49,19 @@ export class ContactService {
 
     return contact.photo
   }
+
+  async updatePhoto (guid: string, photoBase64: string): Promise<boolean> {
+    const existing = await this.db.contact.findUnique({ where: { guid } })
+    if (!existing) return false
+
+    await this.db.contact.update({
+      where: { guid },
+      data: {
+        photo: photoBase64,
+        havephoto: true
+      }
+    })
+
+    return true
+  }
 }

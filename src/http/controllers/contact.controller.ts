@@ -84,4 +84,34 @@ export class ContactController {
       } satisfies Api.Error)
     }
   }
+
+  async updatePhoto (req: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const { guid } = req.params as { guid: string }
+    const photoBase64 = req.body as string
+
+    if (!photoBase64 || typeof photoBase64 !== 'string') {
+      return reply.code(400).send({
+        message: 'Invalid or missing base64 photo string',
+        statusCode: 400
+      })
+    }
+
+    try {
+      const updated = await this._contactService.updatePhoto(guid, photoBase64)
+
+      if (!updated) {
+        return reply.code(404).send({
+          message: MESSAGES.CONTACT_NOT_FOUND,
+          statusCode: 404
+        })
+      }
+
+      return reply.code(202).send()
+    } catch {
+      return reply.code(500).send({
+        message: MESSAGES.INTERNAL_ERROR,
+        statusCode: 500
+      })
+    }
+  }
 }

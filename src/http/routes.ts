@@ -12,6 +12,7 @@ export async function appRoutes (app: FastifyInstance): Promise<void> {
 
     protectedRoutes.get('/contact/search', contactController.list.bind(contactController))
     protectedRoutes.get('/contact/:guid/photo', contactController.getPhoto.bind(contactController))
+    protectedRoutes.patch('/contact/:guid/photo', contactController.updatePhoto.bind(contactController))
     protectedRoutes.post('/contact', contactController.create.bind(contactController))
   })
 }
