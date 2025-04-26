@@ -251,7 +251,9 @@ Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
 ```env
 DATABASE_URL="mysql://user:password@localhost:3306/dbname"
+DOCUMENT_NUMBER="16453285037"  # Exemplo de número de documento (CPF)
 ```
+`DOCUMENT_NUMBER`: Esta variável de ambiente armazena o número de documento (CPF) que será utilizado para autenticação através de um token base64. O middleware da aplicação vai verificar se o número decodificado do token corresponde a esse valor, garantindo a segurança da API.
 
 ### 2. Prisma
 
