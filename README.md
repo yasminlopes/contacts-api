@@ -240,8 +240,13 @@ DELETE /contact/f0ba096f689844f2aa01549bfc93133e/photo
   "message": "Foto excluída com sucesso."
 }
 ```
+## Acesso à API
+a API está hospedada, você pode acessar a API que está hospedada na seguinte URL:
 
----
+```https://9264-52-67-26-166.ngrok-free.app/``` 
+
+## Rodando Localmente
+Para rodar a API localmente, siga os passos abaixo:
 
 ## Configuração do Ambiente
 
