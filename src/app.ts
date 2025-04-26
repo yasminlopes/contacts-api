@@ -1,10 +1,8 @@
-import fastify from 'fastify'
+import { FastifyInstance } from 'fastify'
 import cors from '@fastify/cors'
 import { appRoutes } from './http/routes'
-import dotenv from 'dotenv'
 
-dotenv.config()
-
-export const app = fastify()
-void app.register(cors, { origin: true })
-void app.register(appRoutes)
+export async function appPlugin (app: FastifyInstance): Promise<void> {
+  await app.register(cors, { origin: true })
+  await app.register(appRoutes)
+}
