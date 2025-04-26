@@ -1,5 +1,6 @@
 import { prisma } from '../infra/db/prisma/client'
 import { ContactInput, ContactQuery } from '../dtos/contact.dto'
+import { Contact } from '@prisma/client'
 
 export class ContactService {
   constructor (private readonly db = prisma) {}
@@ -75,5 +76,34 @@ export class ContactService {
     })
 
     return true
+  }
+
+  async delete (guid: string): Promise<Contact | null> {
+    const existing = await this.db.contact.findUnique({ where: { guid } })
+    if (!existing) return null
+
+    await this.db.contact.delete({ where: { guid } })
+
+    return existing
+  }
+
+  async deletePhoto (guid: string): Promise<Contact | null> {
+    const existing = await this.db.contact.findUnique({ where: { guid } })
+    if (!existing || !existing.havephoto) return null
+
+    await this.db.contact.update({
+      where: { guid },
+      data: {
+        photo: null,
+        havephoto: false
+      }
+    })
+
+    const updatedContact: Contact = {
+      ...existing,
+      photo: null,
+      havephoto: false
+    }
+    return updatedContact
   }
 }

@@ -140,4 +140,48 @@ export class ContactController {
       })
     }
   }
+
+  async delete (req: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const { guid } = req.params as { guid: string }
+
+    try {
+      const contact = await this._contactService.delete(guid)
+
+      if (!contact) {
+        return reply.code(404).send({
+          message: MESSAGES.CONTACT_NOT_FOUND,
+          statusCode: 404
+        })
+      }
+
+      return reply.code(200).send(contact)
+    } catch {
+      return reply.code(500).send({
+        message: MESSAGES.CONTACT_DELETE_ERROR,
+        statusCode: 500
+      })
+    }
+  }
+
+  async deletePhoto (req: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const { guid } = req.params as { guid: string }
+
+    try {
+      const updatedContact = await this._contactService.deletePhoto(guid)
+
+      if (!updatedContact) {
+        return reply.code(404).send({
+          message: MESSAGES.CONTACT_NOT_FOUND,
+          statusCode: 404
+        })
+      }
+
+      return reply.code(202).send()
+    } catch {
+      return reply.code(500).send({
+        message: MESSAGES.CONTACT_PHOTO_DELETE_ERROR,
+        statusCode: 500
+      })
+    }
+  }
 }

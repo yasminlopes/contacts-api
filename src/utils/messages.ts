@@ -7,6 +7,7 @@ export const MESSAGES = {
   CONTACT_CREATE_ERROR: 'Erro ao cadastrar contato.',
   CONTACT_UPDATE_ERROR: 'Erro ao atualizar contato.',
   CONTACT_DELETE_ERROR: 'Erro ao deletar contato.',
+  CONTACT_PHOTO_DELETE_ERROR: 'Erro ao deletar foto do contato.',
   CONTACT_PHOTO_ERROR: 'Erro ao buscar foto do contato.',
   CONTACT_PHOTO_NOT_FOUND: 'Foto não encontrada.',
   INTERNAL_ERROR: 'Erro interno no servidor.',
