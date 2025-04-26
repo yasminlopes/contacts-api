@@ -1,15 +1,8 @@
-import fs from 'fs'
-import path from 'path'
 import fastify from 'fastify'
 import { appPlugin } from './app'
 import 'dotenv/config'
 
-const httpsApp = fastify({
-  https: {
-    key: fs.readFileSync(path.join(__dirname, 'selfsigned.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'selfsigned.crt'))
-  }
-})
+const httpsApp = fastify()
 
 void httpsApp.register(appPlugin)
 
