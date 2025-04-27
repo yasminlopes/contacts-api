@@ -7,6 +7,7 @@ export interface ContactInput {
 }
 
 export interface ContactQuery {
+  guid?: string
   term?: string
   page?: number
   limit?: number
