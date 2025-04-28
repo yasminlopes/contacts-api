@@ -5,26 +5,24 @@ import { Contact } from '@prisma/client'
 export class ContactService {
   constructor (private readonly db = prisma) {}
 
-  async index (params: ContactQuery): Promise<{ contacts: any[], total: number }> {
+  async index (params: ContactQuery): Promise<{ contacts: Contact[], total: number }> {
     const skip = (params.page - 1) * params.limit
+
+    const whereCondition = params.guid
+      ? { guid: params.guid }
+      : params.term
+        ? { name: { contains: params.term, mode: 'insensitive' as const } }
+        : undefined
 
     const [contacts, total] = await Promise.all([
       this.db.contact.findMany({
-        where: params.term
-          ? {
-              name: { contains: params.term, mode: 'insensitive' }
-            }
-          : undefined,
+        where: whereCondition,
         orderBy: { name: 'asc' },
         skip,
         take: params.limit
       }),
       this.db.contact.count({
-        where: params.term
-          ? {
-              name: { contains: params.term, mode: 'insensitive' }
-            }
-          : undefined
+        where: whereCondition
       })
     ])
 
