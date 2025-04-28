@@ -6,18 +6,19 @@ export class ContactService {
   constructor (private readonly db = prisma) {}
 
   async index (params: ContactQuery): Promise<{ contacts: Contact[], total: number }> {
-    const skip = (params.page - 1) * params.limit
-
     if (params.guid) {
       const contact = await this.db.contact.findUnique({
         where: { guid: params.guid }
       })
 
-      return {
-        contacts: contact ? [contact] : [],
-        total: contact ? 1 : 0
+      if (!contact) {
+        return { contacts: [], total: 0 }
       }
+
+      return { contacts: [contact], total: 1 }
     }
+
+    const skip = (params.page - 1) * params.limit
 
     const whereCondition = params.term
       ? { name: { contains: params.term, mode: 'insensitive' as const } }
