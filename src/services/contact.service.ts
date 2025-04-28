@@ -8,11 +8,20 @@ export class ContactService {
   async index (params: ContactQuery): Promise<{ contacts: Contact[], total: number }> {
     const skip = (params.page - 1) * params.limit
 
-    const whereCondition = params.guid
-      ? { guid: params.guid }
-      : params.term
-        ? { name: { contains: params.term, mode: 'insensitive' as const } }
-        : undefined
+    if (params.guid) {
+      const contact = await this.db.contact.findUnique({
+        where: { guid: params.guid }
+      })
+
+      return {
+        contacts: contact ? [contact] : [],
+        total: contact ? 1 : 0
+      }
+    }
+
+    const whereCondition = params.term
+      ? { name: { contains: params.term, mode: 'insensitive' as const } }
+      : undefined
 
     const [contacts, total] = await Promise.all([
       this.db.contact.findMany({
