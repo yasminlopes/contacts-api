@@ -7,6 +7,8 @@ Uma API simples para gerenciar contatos, construída com **Fastify** e **Prisma*
 
 Este projeto permite que você crie, atualize, remova e pesquise contatos em um banco de dados. Ele utiliza o **Fastify** como servidor HTTP e **Prisma** como ORM para interagir com o banco de dados.
 
+- [Link para documentação](https://documenter.getpostman.com/view/40757784/2sB2j1hCqC)
+
 ### Tecnologias Utilizadas
 
 - **Fastify**: Framework rápido e eficiente para Node.js.
